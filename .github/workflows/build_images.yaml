@@ -22,7 +22,7 @@ jobs:
       - id: new_versions
         name: Check versions
         run: |
-          echo "::set-output name=image-matrix::{'include':$(python check_updates/check.py)}"
+          echo "{'include':$(python check_updates/check.py)}" >> $GITHUB_OUTPUT
         env:
           REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
           REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
@@ -31,9 +31,9 @@ jobs:
   build-image:
     needs: check-versions
     runs-on: ubuntu-latest
-    if: ${{ needs.check-versions.outputs.image-matrix != '{''include'':[]}' }}
+    if: ${{ $GITHUB_OUTPUT != '{''include'':[]}' }}
     strategy:
-      matrix: ${{ fromJson(needs.check-versions.outputs.image-matrix) }}
+      matrix: ${{ fromJson($GITHUB_OUTPUT) }}
     steps:
       - name: Checkout repository and modules
         uses: actions/checkout@v2
