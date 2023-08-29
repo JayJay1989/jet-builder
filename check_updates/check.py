@@ -24,12 +24,13 @@ organization = "projectorimages"
 if __name__=="__main__":
     registry_username = os.getenv("REGISTRY_USERNAME")
     registry_password = os.getenv("REGISTRY_PASSWORD")
+    registry = os.getenv("REGISTRY")
 
     product_codes = ",".join(ide_repos.keys())
     url = "https://data.services.jetbrains.com/products?code=" + product_codes + "&release.type=release"
     data: list = json.loads(urlopen(url).read())
 
-    dh = DockerRegistryClient('https://hub.docker.com', username=registry_username, password=registry_password)
+    dh = DockerRegistryClient(registry, username=registry_username, password=registry_password)
 
     latest_releases = list()
     for code, repository in ide_repos.items():
