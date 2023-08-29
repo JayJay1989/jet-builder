@@ -2,6 +2,8 @@ name: Check and build images
 on:
   schedule:
     - cron: '0 0 * * *'
+  workflow_dispatch:
+  
 jobs:
   check-versions:
     runs-on: ubuntu-latest
