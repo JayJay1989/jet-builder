@@ -21,8 +21,8 @@ jobs:
         name: Check versions
         run: |
           json=$(python check_updates/check.py)
-          echo "matrix={\\"include\\":$json}"
-          echo "matrix={\\"include\\":$json}" >> $GITHUB_OUTPUT
+          echo "matrix=$(jq -r -c . <<< "$json")"
+          echo "matrix=$(jq -r -c . <<< "$json")" >> $GITHUB_OUTPUT
         env:
           REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
           REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
@@ -33,9 +33,9 @@ jobs:
   build-image:
     needs: checkversions
     runs-on: ubuntu-latest
-    if: ${{ needs.checkversions.outputs.matrix != '{\\"include\\":[]}' }}
+    if: ${{ needs.checkversions.outputs.matrix != '[]' }}
     strategy:
-      matrix: ${{ toJson(fromJson(needs.checkversions.outputs.matrix)) }}
+      matrix: ${{ fromJson(needs.checkversions.outputs.matrix) }}
     steps:
       - name: Checkout repository and modules
         uses: actions/checkout@v2
