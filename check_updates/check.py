@@ -22,7 +22,7 @@ ide_repos = {
 if __name__ == "__main__":
     registry_username = os.getenv("REGISTRY_USERNAME")
     registry_password = os.getenv("REGISTRY_PASSWORD")
-    registry = os.getenv("REGISTRY")
+    registry = "https://dockerhub.buildserver.be"
 
     product_codes = ",".join(ide_repos.keys())
     url = "https://data.services.jetbrains.com/products?code=" + product_codes + "&release.type=release"
