@@ -10,7 +10,7 @@ jobs:
     outputs:
       matrix: ${{ steps.new_versions.outputs.matrix }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Set up Python 3.9
         uses: actions/setup-python@v2
         with:
@@ -22,8 +22,9 @@ jobs:
       - id: new_versions
         name: Check versions
         run: |
-          json=$(jq @json <<< $(python check_updates/check.py))
-          echo "matrix=$json" >> $GITHUB_OUTPUT
+          json=$(python check_updates/check.py)
+          echo '${{ toJSON($json) }}'
+          echo "matrix={\"include\":$json}" >> $GITHUB_OUTPUT
         env:
           REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
           REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
