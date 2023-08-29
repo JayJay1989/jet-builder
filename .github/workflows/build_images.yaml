@@ -32,9 +32,9 @@ jobs:
   build-image:
     needs: check-versions
     runs-on: ubuntu-latest
-    if: ${{ needs.check-versions.outputs.matrix != '[]' }}
+    if: ${{ needs.check_versions.outputs.matrix != '[]' }}
     strategy:
-      matrix: ${{ fromJson(needs.check-versions.outputs.matrix) }}
+      matrix: ${{ fromJson(needs.check_versions.outputs.matrix) }}
     steps:
       - name: Checkout repository and modules
         uses: actions/checkout@v2
