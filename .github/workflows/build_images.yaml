@@ -23,7 +23,6 @@ jobs:
         name: Check versions
         run: |
           json=$(python check_updates/check.py)
-          echo '${{ toJSON($json) }}'
           echo "matrix={\"include\":$json}" >> $GITHUB_OUTPUT
         env:
           REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
