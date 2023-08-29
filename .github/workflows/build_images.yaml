@@ -22,7 +22,9 @@ jobs:
       - id: new_versions
         name: Check versions
         run: |
-          echo "matrix={\"include\":$(python check_updates/check.py)}" >> $GITHUB_OUTPUT
+          json="$(python check_updates/check.py)"
+          echo "matrix: $json"
+          echo "matrix={'include':$json}" >> $GITHUB_OUTPUT
         env:
           REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
           REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
