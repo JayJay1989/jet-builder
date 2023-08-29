@@ -22,8 +22,7 @@ jobs:
       - id: new_versions
         name: Check versions
         run: |
-          json="$(python check_updates/check.py)"
-          echo "matrix=$json"
+          json="toJSON($(python check_updates/check.py))"
           echo "matrix=$json" >> $GITHUB_OUTPUT
         env:
           REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
