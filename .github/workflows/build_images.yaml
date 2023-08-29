@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
   
 jobs:
-  check-versions:
+  checkversions:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -30,11 +30,11 @@ jobs:
       matrix: ${{ steps.new_versions.outputs.matrix }}
       
   build-image:
-    needs: check-versions
+    needs: checkversions
     runs-on: ubuntu-latest
-    if: ${{ needs.check_versions.outputs.matrix != '[]' }}
+    if: ${{ needs.checkversions.outputs.matrix != '[]' }}
     strategy:
-      matrix: ${{ fromJson(needs.check_versions.outputs.matrix) }}
+      matrix: ${{ fromJson(needs.checkversions.outputs.matrix) }}
     steps:
       - name: Checkout repository and modules
         uses: actions/checkout@v2
