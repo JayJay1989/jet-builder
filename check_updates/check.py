@@ -57,4 +57,5 @@ if __name__ == "__main__":
                 product["releases"][0]["downloads"]["linux"]["link"] for product in data if product["code"] == code)
             latest_releases.append(release)
 
-    print(latest_releases)
+    final = json.dumps(data).replace('"', '\\"')
+    print(final)
