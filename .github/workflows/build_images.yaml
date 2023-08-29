@@ -26,7 +26,7 @@ jobs:
         env:
           REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
           REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
-          REGISTRY: ${{ secrets.REGISTRY }}
+          REGISTRY: "https://dockerhub.buildserver.be"
     outputs:
       matrix: ${{ steps.new_versions.outputs.matrix }}
       
