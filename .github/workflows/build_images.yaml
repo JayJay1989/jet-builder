@@ -8,7 +8,7 @@ jobs:
   check-versions:
     runs-on: ubuntu-latest
     outputs:
-      image-matrix: ${{ steps.new_versions.outputs.image-matrix }}
+      matrix: ${{ steps.new_versions.outputs.matrix }}
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python 3.9
@@ -22,10 +22,7 @@ jobs:
       - id: new_versions
         name: Check versions
         run: |
-          $jsonString = $(python check_updates/check.py)
-          echo $jsonString
-          echo "image-matrix={'include':$jsonString}" >> $Env:GITHUB_OUTPUT
-          echo "::set-output name=image-matrix::{'include':$jsonString}"
+          echo "matrix={\"include\":$(python check_updates/check.py)}" >> $GITHUB_OUTPUT
         env:
           REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
           REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
@@ -34,9 +31,9 @@ jobs:
   build-image:
     needs: check-versions
     runs-on: ubuntu-latest
-    if: ${{ needs.check-versions.outputs.image-matrix != '{''include'':[]}' }}
+    if: ${{ needs.check-versions.outputs.matrix != "{''include'':[]}' }}
     strategy:
-      matrix: ${{ fromJson(needs.check-versions.outputs.image-matrix) }}
+      matrix: ${{ fromJson(needs.check-versions.outputs.matrix) }}
     steps:
       - name: Checkout repository and modules
         uses: actions/checkout@v2
