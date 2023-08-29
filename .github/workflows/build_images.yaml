@@ -33,7 +33,6 @@ jobs:
   build-image:
     needs: checkversions
     runs-on: ubuntu-latest
-    if: ${{ needs.checkversions.outputs.matrix != '[]' }}
     strategy:
       matrix: ${{ fromJson(needs.checkversions.outputs.matrix) }}
     steps:
