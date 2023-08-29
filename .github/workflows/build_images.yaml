@@ -7,8 +7,6 @@ on:
 jobs:
   check-versions:
     runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.new_versions.outputs.matrix }}
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python 3.9
@@ -23,12 +21,14 @@ jobs:
         name: Check versions
         run: |
           json=$(python check_updates/check.py)
-          echo "matrix=[\"$json\"]" >> ${GITHUB_OUTPUT}
+          echo "matrix=$json" >> $GITHUB_OUTPUT
         env:
           REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
           REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
           REGISTRY: ${{ secrets.REGISTRY }}
-
+    outputs:
+      matrix: ${{ steps.new_versions.outputs.matrix }}
+      
   build-image:
     needs: check-versions
     runs-on: ubuntu-latest
