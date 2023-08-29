@@ -23,6 +23,7 @@ jobs:
         name: Check versions
         run: |
           echo "image-matrix={'include':$(python check_updates/check.py)}" >> $GITHUB_OUTPUT
+          echo "::set-output name=image-matrix::{'include':$(python check_updates/check.py)}"
         env:
           REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
           REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
