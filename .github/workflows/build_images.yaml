@@ -26,7 +26,7 @@ jobs:
         env:
           REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
           REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
-          REGISTRY: "https://dockerhub.buildserver.be"
+          REGISTRY: "dockerhub.buildserver.be:443"
     outputs:
       matrix: ${{ steps.new_versions.outputs.matrix }}
       
@@ -51,7 +51,7 @@ jobs:
         with:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
-          registry: "https://dockerhub.buildserver.be"
+          registry: "https://dockerhub.buildserver.be:443"
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
