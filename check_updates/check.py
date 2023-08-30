@@ -51,10 +51,9 @@ if __name__ == "__main__":
 
         if latest_version > latest_tag:
             release = dict()
-            release["image"] = registry + "/" + repository
             release["version"] = next(product["releases"][0]["version"] for product in data if product["code"] == code)
-            release["download"] = next(
-                product["releases"][0]["downloads"]["linux"]["link"] for product in data if product["code"] == code)
+            release["image"] = "dockerhub.buildserver.be:443" + "/" + repository + ":" + release["version"]
+            release["download"] = next(product["releases"][0]["downloads"]["linux"]["link"] for product in data if product["code"] == code)
             latest_releases.append(release)
             
     final = json.dumps(latest_releases)
