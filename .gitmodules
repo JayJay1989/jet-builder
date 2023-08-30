@@ -4,3 +4,6 @@
 [submodule "projector-server"]
 	path = projector-server
 	url = https://github.com/JetBrains/projector-server.git
+[submodule "projector-client"]
+	path = projector-client
+	url = https://github.com/JetBrains/projector-client.git
