@@ -46,6 +46,9 @@ jobs:
         uses: actions/checkout@v3
         with:
           submodules: true
+      - name: Show directories
+        run: |
+            ls -l
       - name: Edit Local.properties
         run: |
             echo "useLocalProjectorClient=true" > /projector-server/local.properties
